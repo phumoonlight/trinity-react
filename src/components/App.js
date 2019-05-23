@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react'
 import './App.css';
-import List from './List';
+import Calculator from './Calculator';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>- Todo List -</p>
-        <List />
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">Basic React</header>
+        <div className='app-body'>
+          <Calculator/>
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;
