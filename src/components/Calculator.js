@@ -4,7 +4,7 @@ import CalculatorOutput from './CalculatorOutput';
 export default class Calculator extends Component {
   state = {
     summary: 0,
-    input: ''
+    input: 0
   }
 
   doPlus = () => {
@@ -28,6 +28,7 @@ export default class Calculator extends Component {
   render() {
     return (
       <div id='calculator'>
+        <div>Calculator</div>
         <input
           type='number'
           onChange={this.onChangeHandler}

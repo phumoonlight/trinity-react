@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import './App.css';
-import Calculator from './Calculator';
+import Calculator from './Calculator'
+import IncomeAndExpensesList from './IncExp'
+import './App.css'
 
 export default class App extends Component {
   render() {
@@ -9,6 +10,7 @@ export default class App extends Component {
         <header className="App-header">Basic React</header>
         <div className='app-body'>
           <Calculator/>
+          <IncomeAndExpensesList/>
         </div>
       </div>
     )
