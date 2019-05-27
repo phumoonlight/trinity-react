@@ -1,72 +1,95 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class Form extends Component {
+class Form extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       list: [],
       balance: 0,
-      input: {
-        detail: '',
-        amount: 0
-      }
-    }
+      inputDetail: '',
+      inputAmount: 0,
+    };
   }
 
-  onChangeHandler = (e) => {
-    const clonedState = this.state
-    clonedState.input[e.target.name] = e.target.value
-    this.setState(clonedState)
+  onChangeHandlerDetail = (e) => {
+    const { value } = e.target;
+    this.setState({
+      inputDetail: value,
+    });
+  }
+
+  onChangeHandlerAmount = async (e) => {
+    const { value } = e.target;
+    await this.setState({
+      inputAmount: value,
+    });
   }
 
   onSubmitHandler = async (e) => {
-    let balance = this.state.balance
-    const amount = this.state.input.amount
-    const detail = this.state.input.detail
-    const button = e.target.value
-   
-    balance = button === 'income' 
-    ? balance + (+amount) 
-    : balance - (+amount)
+    const { inputDetail, inputAmount, list } = this.state;
+    const type = e.target.value;
+    const amount = inputAmount;
+    const detail = inputDetail === '' ? 'รายการ' : inputDetail;
+    let { balance } = this.state;
 
-    const newState = {
-      list: [...this.state.list, {
-        detail: detail !== '' 
-        ? detail 
-        : `รายการ${this.state.list.length + 1}`,
-        amount: amount,
-        balance: balance,
-        type: button
+    balance = type === 'income'
+      ? balance + (+inputAmount)
+      : balance - (+inputAmount);
+
+    await this.setState({
+      list: [...list, {
+        detail,
+        amount,
+        balance,
+        type,
       }],
-      balance: balance,
-      input: {
-        detail: '',
-        amount: this.state.input.amount
-      }
-    }
+      balance,
+    });
 
-    await this.setState(newState)
-    this.props.getState(this.state.list)
+    this.passDataToParent();
+  }
+
+  passDataToParent = () => {
+    const { getData } = this.props;
+    const { list } = this.state;
+    getData(list);
   }
 
   render() {
     return (
       <div>
         <input
-          name='detail'
-          type='text'
-          value={this.state.input.detail}
-          onChange={this.onChangeHandler}
+          type="text"
+          onBlur={this.onChangeHandlerDetail}
+          placeholder="รายละเอียด"
         />
         <input
-          name='amount'
-          type='number'
-          value={this.state.input.amount}
-          onChange={this.onChangeHandler}
+          type="number"
+          onBlur={this.onChangeHandlerAmount}
+          placeholder="จำนวน"
         />
-        <button onClick={this.onSubmitHandler} value='income'>รายรับ</button>
-        <button onClick={this.onSubmitHandler} value='expense'>รายจ่าย</button>
+        <button
+          type="button"
+          onClick={this.onSubmitHandler}
+          value="income"
+        >
+        รายรับ
+        </button>
+        <button
+          type="button"
+          onClick={this.onSubmitHandler}
+          value="expense"
+        >
+        รายจ่าย
+        </button>
       </div>
-    )
+    );
   }
 }
+
+export default Form;
+
+Form.propTypes = {
+  getData: PropTypes.func.isRequired,
+};

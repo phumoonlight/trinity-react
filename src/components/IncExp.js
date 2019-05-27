@@ -1,29 +1,32 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Form from './IncExpForm';
 import Table from './IncExpTable';
-import './IncExp.css'
+import './IncExp.css';
 
-export default class List extends Component {
+class List extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      list : []
-    }
+      list: [],
+    };
   }
 
-  getState = (formState) => {
+  getData = (data) => {
     this.setState({
-      list: formState
-    })
+      list: data,
+    });
   }
 
   render() {
+    const { list } = this.state;
     return (
-      <div id='inc-exp-list'>
+      <div id="inc-exp-list">
         <div>รายรับรายจ่าย</div>
-        <Form getState={this.getState}/>
-        <Table data={this.state}/>
+        <Form getData={this.getData} />
+        <Table data={list} />
       </div>
-    )
+    );
   }
 }
+
+export default List;

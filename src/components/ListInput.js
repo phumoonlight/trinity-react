@@ -3,37 +3,38 @@ import React from 'react';
 class ListInput extends React.Component {
   state = {
     list: [],
-    input: ''
+    input: '',
   }
 
   onChangeHandler = (e) => {
-    this.setState({ input: e.target.value })
+    this.setState({ input: e.target.value });
   }
 
   onSubmitHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    const { list, input } = this.state;
     this.setState({
-      list: [...this.state.list, this.state.input], 
-      input: ''
-    })
+      list: [...list, input],
+      input: '',
+    });
   }
 
   render = () => {
+    const { input } = this.state;
     return (
       <form onSubmit={this.onSubmitHandler}>
         <input
-          type='text'
-          value={this.state.input}
+          type="text"
+          value={input}
           onChange={this.onChangeHandler}
         />
         <input
-          type='submit'
-          value='add'
+          type="submit"
+          value="add"
         />
-      </form> 
-    )
+      </form>
+    );
   }
 }
 
 export default ListInput;
-

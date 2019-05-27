@@ -4,53 +4,50 @@ import './List.css';
 class List extends React.Component {
   state = {
     list: [],
-    input: ''
+    input: '',
   }
 
   onChangeHandler = (e) => {
-    this.setState({ input: e.target.value })
+    this.setState({ input: e.target.value });
   }
 
   onSubmitHandler = (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
+    const { list, input } = this.state;
     this.setState({
-      list: [...this.state.list, this.state.input], 
-      input: ''
-    })
-  }
-  
-  getList = () => {
-    return (this.state.list.map((item, index) => {
-      return <li>{item}</li>;
-    })
-    )
+      list: [...list, input],
+      input: '',
+    });
   }
 
-  
+  getList = () => {
+    const { list } = this.state;
+    return (
+      list.map(item => <li key={item.id}>{item}</li>)
+    );
+  }
 
   render = () => {
+    const { input } = this.state;
     return (
-      <div className='todo-list'>
+      <div className="todo-list">
         <form onSubmit={this.onSubmitHandler}>
           <input
-            type='text'
-            value={this.state.input}
+            type="text"
+            value={input}
             onChange={this.onChangeHandler}
           />
           <input
-            type='submit'
-            value='add'
+            type="submit"
+            value="add"
           />
-        </form> 
+        </form>
         <ul>
           {this.getList()}
         </ul>
       </div>
-      
-    )
+    );
   }
 }
 
 export default List;
-
